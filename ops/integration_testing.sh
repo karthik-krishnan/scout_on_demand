@@ -1,4 +1,4 @@
-cd trunk/ops
+cd ops
 #cp config/mysql-database.example config/database.yml
 export ORIGINAL_PATH=$PATH
 export MY_RUBY_HOME=~/.ruby_versions/ruby-1.8.6-p383
