@@ -12,7 +12,11 @@ class MessagesController < ApplicationController
     else
       render :action => :new
     end
+  end
 
+  def show
+    @message = Message.find(params[:id])
+    @message.mark_as_read
   end
   
 end

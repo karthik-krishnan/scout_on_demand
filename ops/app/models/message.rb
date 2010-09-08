@@ -12,41 +12,70 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def formatted_date
-    created_date_time.strftime '%b %d'
+  def formatted_date(display_year = nil)
+    format = '%b %d'
+    format = '%B %d, %Y' unless display_year.nil?
+    created_date_time.strftime format
   end
 
   def sender
     User.find_by_email_id(self.email_id)
   end
 
+  def sent_to
+    ids = recipients.collect {|r| r.email_id}
+    User.find_all_by_email_id(ids).collect {|u| u.user_name}.join(',')
+  end
+
+  def receivers
+    return [] if mail_to.blank?
+    mail_to.split(',').collect {|i| i.strip}
+  end
+
   def validate_receiver_email_ids
-    receiver_email_ids = mail_to.split(',')
-    receiver_email_ids.each {|r|
+    receivers.each {|r|
       u = User.find_by_email_id(r)
-      errors.add(:base, "Invalid email id...#{r}") if u.blank?
+      errors.add(:mail_to, "Invalid email id...#{r}") if u.blank?
     }
   end
 
+  def validate_if_sender_and_receiver_are_same
+    if receivers.size == 1
+      errors.add(:mail_to, "You cannot send to your own email id") if self.email_id == receivers[0]
+    end
+  end
+
   def validate
+    validate_if_sender_and_receiver_are_same
     validate_receiver_email_ids
   end
 
-  def before_save
-    receiver_email_ids = mail_to.split(',')
-    receiver_email_ids.each {|r| recipients.build(:email_id => r) }
+  def logged_user_email_id?(email_id)
+    email_id == self.email_id
+  end
+
+  def before_create
+    receivers.each {|r|
+      recipients.build(:email_id => r) unless logged_user_email_id?(r)
+    }
+  end
+
+  def recipient
+    recipients.find_by_email_id(User.current.email_id)
   end
 
   def read?
-    recipient = recipients.find_by_email_id(User.current.email_id)
     raise "You are not authorized to access this message!!!" unless recipient
     recipient.read?
   end
 
   def unread?
-    recipient = recipients.find_by_email_id(User.current.email_id)
     raise "You are not authorized to access this message!!!" unless recipient
     recipient.unread?
   end
- 
+
+  def mark_as_read
+    recipient.mark_as_read
+  end
+
 end
