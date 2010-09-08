@@ -19,5 +19,9 @@ class Recipient < ActiveRecord::Base
   def unread?
     message_status == UNREAD_STATUS
   end
-  
+
+  def mark_as_read
+    self.message_status = READ_STATUS
+    self.save!
+  end
 end
