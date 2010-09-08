@@ -20,11 +20,14 @@ class Message < ActiveRecord::Base
     User.find_by_email_id(self.email_id)
   end
 
+  def receivers
+    mail_to.split(',').collect {|i| i.strip}
+  end
+
   def validate_receiver_email_ids
-    receiver_email_ids = mail_to.split(',')
-    receiver_email_ids.each {|r|
+    receivers.each {|r|
       u = User.find_by_email_id(r)
-      errors.add(:base, "Invalid email id...#{r}") if u.blank?
+      errors.add(:mail_to, "Invalid email id...#{r}") if u.blank?
     }
   end
 
@@ -32,9 +35,14 @@ class Message < ActiveRecord::Base
     validate_receiver_email_ids
   end
 
-  def before_save
-    receiver_email_ids = mail_to.split(',')
-    receiver_email_ids.each {|r| recipients.build(:email_id => r) }
+  def logged_user_email_id?(email_id)
+    email_id == self.email_id
+  end
+
+  def before_create
+    receivers.each {|r|
+      recipients.build(:email_id => r) unless logged_user_email_id?(r)
+    }
   end
 
   def read?
