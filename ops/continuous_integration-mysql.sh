@@ -1,4 +1,4 @@
-cd trunk/ops
+cd ops
 rm -f doc/results.html
 rm log/*
 #cp config/mysql-database.example config/database.yml
