@@ -28,6 +28,7 @@ class Message < ActiveRecord::Base
   end
 
   def receivers
+    return [] if mail_to.blank?
     mail_to.split(',').collect {|i| i.strip}
   end
 
@@ -38,7 +39,14 @@ class Message < ActiveRecord::Base
     }
   end
 
+  def validate_if_sender_and_receiver_are_same
+    if receivers.size == 1
+      errors.add(:mail_to, "You cannot send to your own email id") if self.email_id == receivers[0]
+    end
+  end
+
   def validate
+    validate_if_sender_and_receiver_are_same
     validate_receiver_email_ids
   end
 

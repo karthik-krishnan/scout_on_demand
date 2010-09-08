@@ -66,6 +66,7 @@ end
 context Message, "on Validate" do
 
   before(:each) do
+    User.current = User.find_by_user_id('neil')
     @m = Message.new(:mail_to => 'test@scout.com')
   end
 
@@ -78,6 +79,12 @@ context Message, "on Validate" do
     m = Message.new(:mail_to => 'john@scout.com', :subject => 'test', :contents => 'test')
     m.valid?
     m.errors.size.should eql(0)
+  end
+
+  it "should fail if send and receiver are same" do
+    m = Message.new(:mail_to => 'neil@scout.com')
+    m.valid?
+    m.errors.on(:mail_to).should eql('You cannot send to your own email id')
   end
   
 end
