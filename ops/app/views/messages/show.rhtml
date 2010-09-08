@@ -9,5 +9,5 @@
   <span class=sender><%= @message.sender.user_name %></span>
   <span class=to>To: <%= @message.sent_to %></span>
   <span class=date>Date: <%= @message.formatted_date('display_year') %></span>
-  <textarea readonly><%= @message.contents %></textarea>
+  <textarea readonly=""><%= @message.contents %></textarea>
 </div>
