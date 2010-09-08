@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe Message do
   before(:each) do
     @m = Message.new
+    @m.mail_to = "john@scout.com"
   end
 
   it do
