@@ -1,11 +1,11 @@
-<% for recepient in @recepient_messages %>
+<% for recipient in @recepient_messages %>
   <div class=message-content>
     <input style='vertical-align: top' type=checkbox></input>
     <img src=images/face.png />
-    <a class=sender href="#"><%= recepient.message.sender.user_name %></a>
-    <label class=date><%= recepient.message.formatted_date %></label>
-    <% unread_class = recepient.unread? ? "unread" : "" %>
-    <a class="subject <%= unread_class %>" href="#"><%= truncate(recepient.message.subject, :length => 80) %></a>
+    <a class=sender href="#"><%= recipient.message.sender.user_name %></a>
+    <label class=date><%= recipient.message.formatted_date %></label>
+    <% unread_class = recipient.unread? ? "unread" : "" %>
+    <a class="subject <%= unread_class %>" href="/messages/<%= recipient.message.id %>"><%= truncate(recipient.message.subject, :length => 80) %></a>
     <div class=actions><a href="#">Reply</a>&nbsp;<a href="#">Delete</a>&nbsp;<a href="#">Forward</a></div>
   </div>
 <% end %>

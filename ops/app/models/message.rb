@@ -12,12 +12,19 @@ class Message < ActiveRecord::Base
     end
   end
 
-  def formatted_date
-    created_date_time.strftime '%b %d'
+  def formatted_date(display_year = nil)
+    format = '%b %d'
+    format = '%B %d, %Y' unless display_year.nil?
+    created_date_time.strftime format
   end
 
   def sender
     User.find_by_email_id(self.email_id)
+  end
+
+  def sent_to
+    ids = recipients.collect {|r| r.email_id}
+    User.find_all_by_email_id(ids).collect {|u| u.user_name}.join(',')
   end
 
   def receivers

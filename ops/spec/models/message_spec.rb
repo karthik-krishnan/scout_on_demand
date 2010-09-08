@@ -44,10 +44,16 @@ context Message, "when ask for" do
     @m = Message.find_by_email_id(@sender_email_id)
   end
 
-  it "should return formatted date" do
+  it "should return formatted date without year" do
     a = Time.now
     date = a.strftime '%b %d'
     @m.formatted_date.should eql(date)
+  end
+
+  it "should return formatted date with year" do
+    a = Time.now
+    date = a.strftime '%B %d, %Y'
+    @m.formatted_date('display_year').should eql(date)
   end
 
   it "should return sender" do
