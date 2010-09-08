@@ -391,3 +391,127 @@ font-weight: bold;
     width: 183px;
     color: #990000;
 }
+
+#content .show-mail-actions {
+  font-size: 14px;
+  font-family: 'Helvetica';
+  position: relative;
+  left: 8px;
+  top: -30px;
+  height: 30px;
+}
+
+#content .show-mail-actions .reply {
+  background: url('../images/round_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 69px;
+  display: block;
+  text-decoration: none;
+}
+
+#content .show-mail-actions .reply:hover {
+  background: url('../images/round_button-hover.png')  no-repeat;
+}
+
+#content .show-mail-actions .reply span {
+  margin-left: 15px;
+  vertical-align: sub;
+}
+
+#content .show-mail-actions .forward {
+  background: url('../images/round_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 69px;
+  display: block;
+  text-decoration: none;
+  position: relative;
+  left: 65px;
+  top: -34px;
+}
+
+#content .show-mail-actions .forward:hover {
+  background: url('../images/round_button-hover.png')  no-repeat;
+}
+
+#content .show-mail-actions .forward span {
+  margin-left: 7px;
+  vertical-align: sub;
+}
+
+#content .show-mail-actions .delete {
+  background: url('../images/round_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 69px;
+  display: block;
+  text-decoration: none;
+  position: relative;
+  left: 130px;
+  top: -68px;
+}
+
+#content .show-mail-actions .delete:hover {
+  background: url('../images/round_button-hover.png')  no-repeat;
+}
+
+#content .show-mail-actions .delete span {
+  margin-left: 13px;
+  vertical-align: sub;
+}
+
+#content .show-mail-head {
+  border: 1px solid #808080;
+  background-color: #f2f2f2;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: -20px;
+  height: 120px;
+  position: relative;
+}
+
+#content .show-mail-head img {
+  position: absolute;
+  left: 10px;
+  top: 45px;
+}
+
+#content .show-mail-head .subject {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    top: 8px;
+    left: 13px;
+}
+
+#content .show-mail-head .sender {
+    position: absolute;
+    color: #333333;
+    top: 45px;
+    left: 85px;
+}
+
+#content .show-mail-head .to {
+    position: absolute;
+    color: #333333;
+    top: 65px;
+    left: 85px;
+}
+
+#content .show-mail-head .date {
+    position: absolute;
+    color: #333333;
+    top: 85px;
+    left: 85px;
+}
+
+#content .show-mail-head textarea {
+    width: auto;
+    margin-left: -2px;
+    margin-top: 130px;
+    margin-right: 10px;
+    width: 793px;
+    height: 250px;
+}

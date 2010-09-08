@@ -1,7 +1,7 @@
 <% for recipient in @incoming_messages %>
   <div class=message-content>
     <input style='vertical-align: top' type=checkbox></input>
-    <img src=images/face.png />
+    <%= image_tag('face.png') %>
     <a class=sender href="#"><%= recipient.message.sender.user_name %></a>
     <label class=date><%= recipient.message.formatted_date %></label>
     <% unread_class = recipient.unread? ? "unread" : "" %>
