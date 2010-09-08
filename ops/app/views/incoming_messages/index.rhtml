@@ -1,54 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<meta name="keywords" content="">
-<meta name="description" content="">
-<%= stylesheet_link_tag "reset-fonts-grids", "base", "app" %>
-</head>
-<body>
-<div id="doc3" class="yui-t2">
-	<div id="hd">
-        <div id=main_links><span id=user_info><%= User.current.user_name %></span> &nbsp;|&nbsp; Support&nbsp;   |&nbsp;   Blog</div>
-          <img src="images/logo.png"></img>
-	</div>
-	<div id="bd">
-		<div id="yui-main">
-			<div class="yui-b">
-        <div id="content">
-          <div class=bulk-actions>
-          <a class=delete href="#"><span>Delete</span></a>
-          <a class=unread href="#"><span>Mark Unread</span></a>
-          <a class=new_message href="/messages/new"><span>New Message</span></a>
-          </div>
-          <div id=content-top>
-            <div id="data-select"><span>Select: <a href="#">All</a> | <a href="#">None</a></span></div>
-            <div align=right id="data-sort"><span>Sort By: <a href="#">Newest</a></span></div>
-          </div>
-          <%= render :partial => 'show_incoming_messages' %>
-          <div id=content-bottom>
-            <div align=left id=pagination-left><a href="#">Previous</a> | <a href="#">Next</a></div>
-            <div align=center id=pagination-center>1 - 4 of 4</div>
-            <div align=right id=pagination-right><a href="#">First</a> | <a href="#">Last</a></div>
-          </div>
-        </div>
-      </div>
-		</div>
-		<div class="yui-b">
-        <div id="navcontainer">
-        <ul id="navlist">
-        <li id="active"><a href="#" class="current">Inbox (2)</a></li>
-        <li><a href="#">&nbsp;&nbsp;Sent</a></li>
-        <li><a href="#">&nbsp;&nbsp;Trash</a></li>
-        <li><a href="#">Engagements</a></li>
-        <li><a href="#">Clients</a></li>
-        </ul>
-			</div>
-		</div>
-	</div>
-	<div id="ft">
-    <div id=footer><div id=copyright>2010 Scout OnDemand</div></div>
-	</div>
+
+<div class=bulk-actions>
+  <a class=delete href="#"><span>Delete</span></a>
+  <a class=unread href="#"><span>Mark Unread</span></a>
+  <a class=new_message href="/messages/new"><span>New Message</span></a>
 </div>
-</body>
-</html>
+<div id=content-top>
+  <div id="data-select"><span>Select: <a href="#">All</a> | <a href="#">None</a></span></div>
+  <div align=right id="data-sort"><span>Sort By: <a href="#">Newest</a></span></div>
+</div>
+<%= render :partial => 'show_incoming_messages' %>
+<div id=content-bottom>
+  <div align=left id=pagination-left><a href="#">Previous</a> | <a href="#">Next</a></div>
+  <div align=center id=pagination-center>1 - 4 of 4</div>
+  <div align=right id=pagination-right><a href="#">First</a> | <a href="#">Last</a></div>
+</div>
