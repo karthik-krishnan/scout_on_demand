@@ -5,7 +5,13 @@ class Recipient < ActiveRecord::Base
   UNREAD_STATUS = 'Unread'
   READ_STATUS = 'Read'
   DELETED_STATUS = 'Deleted'
-  
+
+  def after_initialize
+    if new_record?
+      self.message_status = Recipient::UNREAD_STATUS
+    end
+  end
+
   def read?
     message_status == READ_STATUS
   end

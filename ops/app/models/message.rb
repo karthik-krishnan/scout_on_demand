@@ -1,8 +1,9 @@
 class Message < ActiveRecord::Base
 
-  validates_presence_of :subject, :contents
+  validates_presence_of :subject, :contents, :mail_to
   has_many :recipients, :class_name => 'Recipient', :dependent => :destroy
 
+  attr_accessor :mail_to
 
   def after_initialize
     if new_record?
@@ -17,6 +18,23 @@ class Message < ActiveRecord::Base
 
   def sender
     User.find_by_email_id(self.email_id)
+  end
+
+  def validate_receiver_email_ids
+    receiver_email_ids = mail_to.split(',')
+    receiver_email_ids.each {|r|
+      u = User.find_by_email_id(r)
+      errors.add(:base, "Invalid email id...#{r}") if u.blank?
+    }
+  end
+
+  def validate
+    validate_receiver_email_ids
+  end
+
+  def before_save
+    receiver_email_ids = mail_to.split(',')
+    receiver_email_ids.each {|r| recipients.build(:email_id => r) }
   end
 
   def read?
