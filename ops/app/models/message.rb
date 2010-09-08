@@ -52,16 +52,22 @@ class Message < ActiveRecord::Base
     }
   end
 
+  def recipient
+    recipients.find_by_email_id(User.current.email_id)
+  end
+
   def read?
-    recipient = recipients.find_by_email_id(User.current.email_id)
     raise "You are not authorized to access this message!!!" unless recipient
     recipient.read?
   end
 
   def unread?
-    recipient = recipients.find_by_email_id(User.current.email_id)
     raise "You are not authorized to access this message!!!" unless recipient
     recipient.unread?
   end
- 
+
+  def mark_as_read
+    recipient.mark_as_read
+  end
+
 end
