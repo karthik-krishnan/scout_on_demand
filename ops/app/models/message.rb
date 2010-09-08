@@ -28,6 +28,7 @@ class Message < ActiveRecord::Base
   end
 
   def receivers
+    return [] if mail_to.blank?
     mail_to.split(',').collect {|i| i.strip}
   end
 
