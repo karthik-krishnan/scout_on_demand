@@ -1,0 +1,1 @@
+require File.join(RAILS_ROOT, 'scenarios', 'lib', 'base.rb')

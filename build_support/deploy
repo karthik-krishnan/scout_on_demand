@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+java -jar lib/jruby-complete.jar -S rake

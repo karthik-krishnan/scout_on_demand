@@ -1,0 +1,273 @@
+#doc3 {
+  width: 1000px;
+}
+
+#doc3 #yui-main .yui-b {
+  margin-left: 180px;
+}
+
+#main_links {
+  float: right;
+  color: #004080;
+  font-size: 13px;
+}
+
+#navcontainer { 
+  height: 450px;
+  border: 1px solid #808080;
+  margin-right: 10px;
+}
+
+#navcontainer ul
+{
+margin-top: 0;
+margin-left: 0;
+padding-left: 0;
+list-style-type: none;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer ul li {
+  list-style: none;
+}
+
+#content {
+  padding-top: 50px;
+  height: 450px;
+  border: 1px solid #808080;
+  background-color: #f8fcff;
+}
+
+#footer {
+  margin-top: 10px;
+  height: 30px;
+  border: 1px solid #cccccc;
+  padding: 3px;
+}
+
+#navcontainer a
+{
+display: block;
+padding: 3px;
+width: 160px;
+background-color: #f8ecef;
+border: 1px solid #cccccc;
+}
+
+#navcontainer a:link, #navlist a:visited
+{
+color: #333333;
+text-decoration: none;
+}
+
+#navcontainer a:hover
+{
+background-color: #dae0eb;
+color: #2f4689;
+}
+
+#navcontainer a.current {
+background-color: #949494;
+color: white;
+font-weight: bold;
+}
+
+#bd {
+  margin-top: 10px;
+}
+
+#copyright {
+  color: #333333;
+  padding-top: 7px;
+  padding-left: 5px;
+}
+
+#content-top {
+  margin-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #808080;
+  height: 30px;
+}
+
+#content-bottom {
+  margin-left: 9px;
+  border: 1px solid #808080;
+  top: 545px;
+  height: 30px;
+  width: 798px;
+  position: absolute;
+}
+
+#data-select {
+  padding-top: 6px;
+  padding-left: 5px;
+  color: #333333;
+  width: 200px;
+}
+
+#pagination-left {
+  position: relative;
+  padding-top: 6px;
+  padding-left: 5px;
+  color: #333333;
+
+}
+
+#pagination-center {
+  position: relative;
+  top: -14px;
+  padding-left: 5px;
+  color: #333333;
+}
+
+#content-top a {
+  color: #2f4689;
+  text-decoration: none;
+}
+
+#content-bottom a {
+  color: #2f4689;
+  text-decoration: none;
+}
+
+#data-sort {
+  position: relative;
+  top: -14px;
+  right: 10px;
+  color: #333333;
+}
+
+#pagination-right {
+  position: relative;
+  top: -30px;
+  right: 10px;
+  color: #333333;
+}
+
+.message-content {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 70px;
+  border-bottom: 1px dotted black;
+  padding-left: 20px;
+  padding-top: 10px;
+  position: relative;
+}
+
+.message-content a {
+  text-decoration: none;
+  color: #333333;
+}
+
+.message-content .subject {
+  position: absolute;
+  color: #004080;
+  left: 105px;
+  top: 30px;
+}
+
+.message-content .subject:hover {
+  text-decoration: underline;
+}
+
+.message-content .subject.unread {
+  font-weight: bold;
+}
+
+.message-content .sender {
+  position: absolute;
+  left: 105px;
+}
+
+.message-content .actions {
+  position: absolute;
+  top: 53px;
+  left: 105px;
+}
+
+.message-content .actions a {
+  color: #777777;
+  padding-right: 10px;
+}
+
+.message-content .date {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  color: #777777;
+}
+
+#content .bulk-actions {
+  font-size: 14px;
+  font-family: 'Helvetica';
+  position: relative;
+  left: 8px;
+  top: 10px;
+  height: 30px;
+}
+
+#content .bulk-actions .delete {
+  background: url('../images/small_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 62px;
+  display: block;
+  text-decoration: none;
+}
+
+#content .bulk-actions .delete:hover {
+  background: url('../images/small_button-hover.png')  no-repeat;
+}
+
+#content .bulk-actions .delete span {
+  margin-left: 8px;
+  vertical-align: sub;
+}
+
+#content .bulk-actions .unread {
+  background: url('../images/medium_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 101px;
+  position: relative;
+  top: -34px;
+  left: 60px;
+  display: block;
+  text-decoration: none;
+}
+
+#content .bulk-actions .unread:hover {
+  background: url('../images/medium_button-hover.png')  no-repeat;
+}
+
+#content .bulk-actions .unread span {
+  margin-left: 8px;
+  vertical-align: sub;
+}
+
+#content .bulk-actions .new_message {
+  background: url('../images/big_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 109px;
+  position: relative;
+  top: -68px;
+  left: 695px;
+  display: block;
+  text-decoration: none;
+}
+
+#content .bulk-actions .new_message:hover {
+  background: url('../images/big_button-hover.png')  no-repeat;
+}
+
+#content .bulk-actions .new_message span {
+  margin-left: 8px;
+  vertical-align: sub;
+}
+
+#user_info {
+  font-weight: bold;
+}
+

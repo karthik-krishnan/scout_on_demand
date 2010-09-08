@@ -1,0 +1,50 @@
+application.base_url=http://forum:3080
+application.internal_base_url=http://localhost:3080
+
+
+sso_server.base_url=http://forum:3080
+
+# If application should talk to SSO Server deployed in the same instance, then comment out the below property.
+sso_server.internal_base_url=http://localhost:3080
+
+
+# Application context info
+# ------------------------
+ops.context_name=ops
+mc.context_name=mc
+sso_admin.context_name=sso_admin
+sso_server.context_name=sso
+sso2_server.context_name=sso2
+# ------------------------
+
+# Server runtime info
+# -------------------
+ops.runtimes.min=1
+ops.runtimes.max=1
+ops.runtimes.sharable=true
+mc.runtimes.min=1
+mc.runtimes.max=1
+mc.runtimes.sharable=true
+sso_admin.runtimes.min=1
+sso_admin.runtimes.max=1
+sso_admin.runtimes.sharable=true
+# -------------------
+
+# Diagnostic Log info
+# -------------------
+diagnostic_log_dir=/tmp
+
+# Cluster Configuration
+# ---------------------
+
+#cluster.enabled=true
+#cluster.admin.host = localhost
+#cluster.admin.port = 3048
+
+#cluster.nodeagents=3
+#cluster.nodeagent.1=name1
+#cluster.nodeagent.2=name2
+#cluster.nodeagent.3=name3
+
+#cluster.nodeagent.1.instances=2
+#cluster.nodeagent.2.instances=2

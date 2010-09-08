@@ -1,0 +1,17 @@
+development:
+  adapter: mysql
+  database: continuous_integration_dev
+  username: root
+  password:
+  host: localhost
+  socket: /var/run/mysqld/mysqld.sock
+
+test:
+  adapter: mysql
+  database: continuous_integration_test
+  username: root
+  password:
+  host: localhost
+  socket: /var/run/mysqld/mysqld.sock
+
+

@@ -1,0 +1,16 @@
+vendor/rails svn://msserver/vendor/lfs_rails/branches/rails_2.2.2
+vendor/plugins/fixture_replacement svn://msserver/vendor/lfs_fixture_replacement/trunk
+vendor/plugins/soft_fixtures svn://msserver/common/rails_plugins/soft_fixtures/trunk
+vendor/plugins/rspec svn://msserver/vendor/lfs_rspec/branches/rspec_for_rails22
+vendor/plugins/rspec_on_rails svn://msserver/vendor/lfs_rspec_on_rails/branches/rspec_on_rails22
+vendor/plugins/rspec_on_rails_hacks svn://msserver/vendor/rspec_on_rails_hacks/branches/rails_22
+vendor/plugins/spicy_code_rspec_matchers svn://msserver/vendor/lfs_spicy_code_rspec_matchers/trunk
+vendor/plugins/000_ruby_hacks svn://msserver/vendor/000_ruby_hacks/trunk
+vendor/plugins/100_rails_hacks svn://msserver/vendor/100_rails_hacks/trunk
+vendor/app_gems/ar_jdbc svn://msserver/vendor/lfs_ar_jdbc/trunk
+vendor/app_gems/activerecord-jdbcmysql-adapter svn://msserver/vendor/lfs_activerecord_jdbcmysql_adapter/tags/rel_1.0.0
+vendor/app_gems/jdbc-mysql svn://msserver/vendor/lfs_jdbc_mysql/tags/rel_1.0.0
+vendor/plugins/warbler svn://msserver/vendor/lfs_warbler/branches/jopenssl_added_version
+vendor/app_gems/validatable svn://msserver/vendor/lfs_validatable/tags/rel_1.0.0
+vendor/plugins/format_column svn://msserver/vendor/lfs_format_column/branches/rails_22
+vendor/plugins/format_column_hacks svn://msserver/vendor/format_column_hacks/trunk

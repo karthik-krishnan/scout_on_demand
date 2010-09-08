@@ -1,0 +1,329 @@
+# Parameters - Please refer the next section "Parameter Info" for details
+<% db = :mysql %> 
+<% app_module = :scout %>
+<% mysql_db_prefix = '' %> 
+<% mysql_host = '' %>
+<% non_mysql_db_suffix = '' %>
+<% db2_host = 'msserver' %>
+#This oracle_host parameter is applicable for jruby context. 
+#if you want to change the oracle server in the MRI context, specify the value in tnsnames.ora
+<% oracle_host = 'msserver' %>
+
+###################
+# Parameters Info #
+###################
+
+# Param 1: db
+# Specify the database 
+# Valid values: 
+#    1. :mysql 
+#    2. :oracle
+#    3. :db2  
+
+#Param 2: app_module
+# Specify whether you are in ops / mc / integration_testing
+# Valid values: 
+#  1. :ops
+#  2. :mc
+#  3. :integration_testing
+#  4. :sso
+
+# Param 3: mysql_db_prefix
+# If you are working on a branch, mysql_db_prefix should be your branch name else it should be ''
+# This entry is only applicable for mysql, the mysql database name should be <mysql_db_prefix_name>eb_mc_test
+# for example if mysql_db_prefix = 'test_' , then the database name should be test_eb_mc_test 
+
+# Param 4:  mysql_host
+# By default mysql will point to your local machine, if want to point to point to some other server specify its ip_address, else it should be ''
+
+# Param 5: non_mysql_db_suffix 
+# This entry is for the non-mysql databases, by default the non_mysql_db_suffix will be your machine id 
+# For example, if you machine name is MSWS1, then the non_mysql_db_suffix will be 1
+# If you want to override this entry specify the entry here
+
+# The actual procedure starts here, no need for users to change anything down below 
+
+# Get the machine_id
+<% m_id = `hostname`.chop.split('msws') %>
+<% if non_mysql_db_suffix == '' %>
+<% machine_id = m_id %>
+<% else %> 
+<% machine_id = non_mysql_db_suffix %>
+<% end %>
+
+<% machine_id = 0.to_s + machine_id.to_s if machine_id.to_s.length == 1 %>
+<% mysql_host = 'localhost' if mysql_host == '' %> 
+
+<% unless RUBY_PLATFORM =~ /java/ %>
+<% if db == :mysql && app_module != :integration_testing %>
+
+development:
+  adapter: mysql
+  database: <%= mysql_db_prefix %><%= app_module %>_dev
+  username: root
+  password:
+  host: <%= mysql_host %>
+  socket: /var/run/mysqld/mysqld.sock
+
+test:
+  adapter: mysql
+  database: <%= mysql_db_prefix %><%= app_module %>_test
+  username: root
+  password:
+  host: <%= mysql_host %>
+  socket: /var/run/mysqld/mysqld.sock
+
+integration:
+  adapter: mysql
+  database: <%= mysql_db_prefix %><%= app_module %>_dev
+  username: root
+  password:
+  host: <%= mysql_host %>
+  socket: /var/run/mysqld/mysqld.sock
+
+<% elsif db == :mysql && app_module == :integration_testing %>
+
+development:
+  adapter: mysql
+  database: <%= mysql_db_prefix %>scout
+  username: root
+  password:
+  host: <%= mysql_host %>
+  socket: /var/run/mysqld/mysqld.sock
+
+test:
+  adapter: mysql
+  database: <%= mysql_db_prefix %>scout_test
+  username: root
+  password:
+  host: <%= mysql_host %>
+  socket: /var/run/mysqld/mysqld.sock
+
+<% elsif db == :oracle  && app_module != :integration_testing %>
+
+development:
+  adapter: oracle
+  database: swami
+  username: eb<%= app_module %>d<%= machine_id %>
+  password: eb<%= app_module %>d<%= machine_id %>
+
+test:
+  adapter: oracle
+  database: swami
+  username: eb<%= app_module %>t<%= machine_id %>
+  password: eb<%= app_module %>t<%= machine_id %>
+
+integration:
+  adapter: oracle
+  database: swami
+  username: eb<%= app_module %>d<%= machine_id %>
+  password: eb<%= app_module %>d<%= machine_id %>
+
+<% elsif db == :oracle  && app_module == :integration_testing %>
+
+development:
+  adapter: oracle
+  database: swami
+  username: ebintd<%= machine_id %>
+  password: ebintd<%= machine_id %>
+
+test:
+  adapter: oracle
+  database: swami
+  username: ebintt<%= machine_id %>
+  password: ebintt<%= machine_id %>
+    
+<% elsif db == :db2  && app_module != :integration_testing %>
+
+development:
+  adapter: ibm_db
+  database: eb<%= app_module %>d<%= machine_id %>
+  username: db2inst1
+  password: password
+  host: <%= db2_host %>
+  port: 50000
+
+test:
+  adapter: ibm_db
+  database: eb<%= app_module %>t<%= machine_id %>
+  username: db2inst1
+  password: password
+  host: <%= db2_host %>
+  port: 50000
+
+integration:
+  adapter: ibm_db
+  database: eb<%= app_module %>d<%= machine_id %>
+  username: db2inst1
+  password: password
+  host: <%= db2_host %>
+  port: 50000
+    
+<% elsif db == :db2  && app_module == :integration_testing %>
+
+development:
+  adapter: ibm_db
+  database: ebintd<%= machine_id %>
+  username: db2inst1
+  password: password
+  host: <%= db2_host %>
+  port: 50000
+
+test:
+  adapter: ibm_db
+  database: ebintt<%= machine_id %>
+  username: db2inst1
+  password: password
+  host: <%= db2_host %>
+  port: 50000
+    
+<% end # End MRI Case %>
+
+<% else # This is JRuby case %>
+
+<% if db == :mysql  && app_module != :integration_testing %>
+
+development:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: <%= mysql_db_prefix %><%= app_module %>_dev
+  username: root
+  password:
+  host: <%= mysql_host %>
+
+test:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: <%= mysql_db_prefix %><%= app_module %>_test
+  username: root
+  password:
+  host: <%= mysql_host %>
+
+integration:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: <%= mysql_db_prefix %><%= app_module %>_dev
+  username: root
+  password:
+  host: <%= mysql_host %>
+
+production:
+  adapter: jdbc 
+  jndi: jdbc/scout
+  driver: <%= db %>
+  database: <%= mysql_db_prefix %>eb_production
+
+<% elsif db == :mysql  && app_module == :integration_testing %>
+
+development:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: <%= mysql_db_prefix %>scout
+  username: root
+  password:
+  host: <%= mysql_host %>
+
+test:
+  adapter: jdbcmysql
+  encoding: utf8
+  database: <%= mysql_db_prefix %>scout_test
+  username: root
+  password:
+  host: <%= mysql_host %>
+
+<% elsif db == :oracle  && app_module != :integration_testing %>
+
+development:
+  adapter: jdbcoracle
+  username: eb<%= app_module %>d<%= machine_id %>
+  password: eb<%= app_module %>d<%= machine_id %>
+  port: 1521
+  url: jdbc:oracle:thin:@<%= oracle_host %>:1521:swami
+  driver: "oracle.jdbc.driver.OracleDriver"
+
+test:
+  adapter: jdbcoracle
+  username: eb<%= app_module %>t<%= machine_id %>
+  password: eb<%= app_module %>t<%= machine_id %>
+  port: 1521
+  url: "jdbc:oracle:thin:@<%= oracle_host %>:1521:swami"
+  driver: "oracle.jdbc.driver.OracleDriver"
+
+integration:
+  adapter: jdbcoracle
+  username: eb<%= app_module %>d<%= machine_id %>
+  password: eb<%= app_module %>d<%= machine_id %>
+  port: 1521
+  url: "jdbc:oracle:thin:@<%= oracle_host %>:1521:swami"
+  driver: "oracle.jdbc.driver.OracleDriver"
+
+production:
+  adapter: jdbc
+  jndi: jdbc/scout
+  driver: <%= db %>
+
+<% elsif db == :oracle  && app_module == :integration_testing %>
+
+development:
+  adapter: jdbcoracle
+  username: ebintd<%= machine_id %>
+  password: ebintd<%= machine_id %>
+  port: 1521
+  url: "jdbc:oracle:thin:@<%= oracle_host %>:1521:swami"
+  driver: "oracle.jdbc.driver.OracleDriver"
+
+test:
+  adapter: jdbcoracle
+  username: ebintt<%= machine_id %>
+  password: ebintt<%= machine_id %>
+  port: 1521
+  url: "jdbc:oracle:thin:@<%= oracle_host %>:1521:swami"
+  driver: "oracle.jdbc.driver.OracleDriver"
+
+<% elsif db == :db2  && app_module != :integration_testing %>
+
+development:
+  adapter: jdbcdb2
+  username: db2inst1
+  password: password
+  url: "jdbc:db2://<%= db2_host %>:50000/eb<%= app_module %>d<%= machine_id %>"
+  driver: "com.ibm.db2.jcc.DB2Driver"
+    
+test:
+  adapter: jdbcdb2
+  username: db2inst1
+  password: password
+  url: "jdbc:db2://<%= db2_host %>:50000/eb<%= app_module %>t<%= machine_id %>"
+  driver: com.ibm.db2.jcc.DB2Driver
+
+integration:
+  adapter: jdbcdb2
+  username: db2inst1
+  password: password
+  url: "jdbc:db2://<%= db2_host %>:50000/eb<%= app_module %>d<%= machine_id %>"
+  driver: com.ibm.db2.jcc.DB2Driver
+
+production:
+  adapter: jdbc 
+  jndi: jdbc/scout
+  driver: <%= db %>
+
+<% elsif db == :db2  && app_module == :integration_testing %>
+
+development:
+  adapter: jdbcdb2
+  username: db2inst1
+  password: password
+  url: jdbc:db2://<%= db2_host %>:50000/ebintd<%= machine_id %>
+  driver: com.ibm.db2.jcc.DB2Driver
+
+test:
+  adapter: jdbcdb2
+  username: db2inst1
+  password: password
+  url: jdbc:db2://<%= db2_host %>:50000/ebintt<%= machine_id %>
+  driver: com.ibm.db2.jcc.DB2Driver
+      
+<% end %>
+
+<% end %>

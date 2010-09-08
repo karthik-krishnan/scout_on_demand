@@ -1,0 +1,102 @@
+Cross DB Migration
+-------------------
+
+Dependency
+-----------
+
+Cross Db Migration needs ms_base plugin.
+Kindly make sure the ms_base plugin is loaded prior to this plugin.
+One way to load the ms_base prior to cross db migration is rename the ms_base folder to 000_ms_base.
+
+Description
+------------
+
+In some specific case, the migration written for one database won't suite good for other database.
+For Example, If you generate a migration to create a table in mysql (the table name length with more
+than 30 characters), this migration works fine with Mysql. If you try to use the same migration file 
+to migrate a oracle database, the migration will rais an exception, stating the table name can not be more 
+than 30 characters.
+
+This cross db migration will help us to write a migration which will work fine with Mysql, Oracle and 
+DB2 databases.
+
+How it works
+------------- 
+
+When you try to create a table with name more than 30 characters, (which is not allowed in oracle)
+this plugin will raise an exception even if you use Mysql or DB2
+
+ 
+Supported Actions
+
+1. For create_table DSL
+
+  a. Table name length check 
+
+    MySql supports 65 character table name, 
+    DB2 supports 128 character table name and 
+    Oracle supports 30 character table name
+
+    This plugin will by default restrict us to create table with name length greater than 26 characters,
+    If you are using composite primary key then you can give 30 characters length name by specifying the parameter 
+    :skip_table_name_length_check
+
+    Note: The reason why we are restricting 26 characters length name is if you are using surrogate primary key
+          Oracle will create an index object with name table_name_idx, In oracle the index name also should be less than 
+          or equal to 30 characters.
+
+  b. Adding the camel case table name as table comment for Oracle Database
+
+     In Oracle dictionary tables the table name will be stored in upper case (even if we specify the table name in camel case),
+     if we want to dump the structure with the table name how we specified in the migration we need to store the table name format  
+     some where. 
+     This plugin stores the table name as we specified (in the migration) in the comment table and use the table comment to get the  
+     formatted table name during schema dump.
+
+2. add_column
+
+  a. column name length check
+     This plugin restrict us to specify column name with length more than 30 characters.
+  b. Restrict specifying limit for integer datatype
+     This plugin will restrict us to specifying :limit for integer datatype (DB2 will raise an error if we specify :limit for  
+     integer datatype)
+  c. Supported addition of NOT NULL column is DB2
+     In DB2 database, adding a not null column to an existing table (even if the table doesn't have data) is not straight forward. 
+     This plugin handled the addition of NOT NULL column for DB2 database (by usine add_column)
+  d. Oracle - recompile the triggers
+     If a table has a trigger and if we add a column the trigger will become unusable, this plugin will take care of recompiling the
+     trigger When ever we add a new column to a table.
+
+3. Rename Table
+
+  a. In DB2 we cannot rename a table, Hence this plugin will restict us to rename a table.
+  Note: The work around to rename a table is create a temp table transfer the data to the temp table and drop, recreate the
+         original table and transfer the data back. 
+
+4. Rename Column
+
+  a. rename_column is also restricted in this plugin.
+
+5. Change column
+
+   This plugin 
+     a. restrict us to change the datatype of a column
+     b. restrict us to reduce the limit of string column
+     c. supports to change the NOT NULL column to nullable and vice versa in DB2 database
+
+6. Remove column
+
+  a. recompile the triggers in Oracle if a column has been removed from a table which has a trigger.
+
+7. Schmema dumper:
+
+  This plugin supports to 
+  a. dump oracle functions, triggers and packages
+  b. dump oracle check constraints, unique constraints 
+  c. generate sqls for default data
+  d. For oracle DB, picks the table name from the table comment
+  e. Supports composite Primary key tables
+
+8. db_specific_integer_data_type
+
+

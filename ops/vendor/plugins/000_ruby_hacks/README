@@ -1,0 +1,11 @@
+RubyHacks
+=========
+
+Description goes here
+
+
+Java invoking support:
+
+Plugin allows transperant call to Java irrespective of YAJB or JRuby
+
+1. To override class path, set the constant :CLASS_PATH at your environment.rb with the array of libraries.

@@ -1,0 +1,4 @@
+#!/bin/bash
+#
+echo $*
+java -jar ./ops/vendor/plugins/warbler/lib/jruby-complete-*.jar -S rake $*

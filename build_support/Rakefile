@@ -1,0 +1,104 @@
+class Object
+
+  $ignore_error = false
+ 
+  def `(args)
+    result = super
+    if $?.exitstatus == 0
+        result 
+    else
+      unless $ignore_error
+        code = $!.is_a?(SystemExit) ? $!.status : 1
+        msg = "Build failure with code #{code}"
+        puts "\e[1;31m#{msg}\e[0m"
+        exit
+      end
+    end
+  end
+
+  def ignore_error
+    begin
+      i = $ignore_error
+      $ignore_error = true
+      yield
+    ensure
+      $ignore_error = i
+    end
+  end
+
+  def dir_empty?(dir)
+    raise "not a directory" unless File.directory?(dir)
+    Dir.entries(dir).size == 2
+  end
+
+end
+
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+WIKID_INTEGRATION = false
+ROOT_FOLDER = File.expand_path(File.dirname(__FILE__))
+
+task :default => [:build]
+
+desc "Build Scout Project"
+task :build do
+  puts "Guru Krupa..."
+  print "Preparing Directories..."
+  `rm -rf package`
+  `mkdir package`
+  `cp ./build_support/environment.properties.example ./package`  
+  `rm -rf build`
+  `mkdir build`
+  puts "Done."
+
+  `cp build_support/glassfish_deploy.rake package/Rakefile`
+  `cp build_support/deploy package`
+  
+  print "Building Ops WAR..."
+  `rm -rf build` if File.directory?("build")
+  `mkdir build` 
+  Dir.chdir("ops") do
+    `cp config/database.yml.example config/database.yml.template`
+    `rm log/*` if Dir.entries('log').size > 3  #Ignore svn dir as well
+    `echo \"PLACEHOLDER for development.log\" > log/development.log`
+    `echo \"PLACEHOLDER for test.log\" >  log/test.log`
+    `echo \"PLACEHOLDER for production.log\" >  log/production.log`
+    `mkdir tmp` unless File.directory?("tmp")
+    `rm tmp/* -r` unless dir_empty?('tmp')
+    `echo \"PLACEHOLDER SO THAT TMP WOULD BE CREATED\" >  tmp/PLACEHOLDER`
+    run_rake_task "war:clean --silent"
+    run_rake_task "war --silent"
+  end
+  `mv ops/ops.war package`
+  puts "Done."
+
+   
+  print "Preparing DB Migration app..."
+  copy_without_svn("db", "package/db_migrations")
+
+  mkdir_p "package/lib"
+  `cp java_libraries/mysql*.jar package/lib`
+  `cp #{ROOT_FOLDER}/ops/vendor/plugins/warbler/lib/jruby-complete*.jar package/lib/jruby-complete.jar`
+  `cp package/lib/jruby-complete.jar package/db_migrations/lib`
+
+  copy_without_svn("db/scenarios", "package/db_migrations/scenarios")
+  puts "Done."
+
+  msg = 'Build succeeded' 
+  puts "\e[1;32m#{msg}\e[0m"
+end
+
+def copy_without_svn(source, destination) 
+  `cp -rfL #{source} #{destination}`
+  `rm -rf \`find #{destination}/ -name .svn\``
+end
+
+def run_rake_task(arg)
+  if RUBY_PLATFORM =~ /java/
+  	`java -jar ./vendor/plugins/warbler/lib/jruby-complete-*.jar -S rake #{arg}`
+  else
+    `rake #{arg}`
+  end
+end

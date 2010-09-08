@@ -1,0 +1,27 @@
+vendor/rails svn://msserver/vendor/lfs_rails/branches/rails_2.2.2
+vendor/plugins/compositekeys svn://msserver/vendor/lfs_compositekeys/branches/rails_22
+vendor/plugins/compositekeys_hacks svn://msserver/vendor/composite_primary_keys_hacks/branches/rails_22
+vendor/plugins/cross_db_migration svn://msserver/common/rails_plugins/cross_db_migration/trunk
+vendor/plugins/rails_sql_views svn://msserver/vendor/lfs_rails_sql_views/trunk
+vendor/plugins/100_rails_hacks svn://msserver/vendor/100_rails_hacks/trunk
+vendor/plugins/rails_sql_views_hacks svn://msserver/vendor/rails_sql_views_hacks/trunk
+vendor/plugins/sakuzaku_rake_tasks svn://msserver/vendor/lfs_sakuzaku_rake_tasks/tags/rel_1.0.0
+vendor/plugins/mig-constraints svn://msserver/vendor/lfs_mig-constraints/trunk
+vendor/plugins/activefixtures svn://msserver/vendor/lfs_activefixtures/tags/rel_1.0.0
+vendor/plugins/fixture_replacement svn://msserver/vendor/lfs_fixture_replacement/tags/rel_1.0.0
+vendor/plugins/soft_fixtures svn://msserver/common/rails_plugins/soft_fixtures/tags/rel_1.0.0
+vendor/plugins/migration_test_helper svn://msserver/vendor/lfs_migration_test_helper/tags/rel_1.0.0
+vendor/plugins/rspec svn://msserver/vendor/lfs_rspec/branches/rspec_for_rails22
+vendor/plugins/rspec_on_rails svn://msserver/vendor/lfs_rspec_on_rails/branches/rspec_on_rails22
+vendor/plugins/rspec_on_rails_hacks svn://msserver/vendor/rspec_on_rails_hacks/branches/rails_22
+vendor/plugins/spicy_code_rspec_matchers svn://msserver/vendor/lfs_spicy_code_rspec_matchers/trunk
+vendor/plugins/format_column svn://msserver/vendor/lfs_format_column/tags/rel_1.0.0
+vendor/plugins/format_column_hacks svn://msserver/vendor/format_column_hacks/tags/rel_1.0.0
+vendor/app_gems/ar_jdbc svn://msserver/vendor/lfs_ar_jdbc/trunk
+vendor/app_gems/activerecord-jdbcmysql-adapter svn://msserver/vendor/lfs_activerecord_jdbcmysql_adapter/tags/rel_1.0.0
+vendor/app_gems/activerecord-jdbcoracle-adapter svn://msserver/vendor/lfs_activerecord_jdbcoracle_adapter/tags/rel_1.0.0
+vendor/app_gems/activerecord-jdbcdb2-adapter svn://msserver/vendor/lfs_activerecord_jdbcdb2_adapter/tags/rel_1.0.0
+vendor/app_gems/jdbc-mysql svn://msserver/vendor/lfs_jdbc_mysql/tags/rel_1.0.0
+vendor/app_gems/jdbc-oracle svn://msserver/vendor/lfs_jdbc_oracle/tags/rel_1.0.0
+vendor/app_gems/jdbc-db2 svn://msserver/vendor/lfs_jdbc_db2/tags/rel_1.0.0
+

@@ -1,0 +1,7 @@
+author: Alex Le
+summary: Loading fixture data based on foreign key constraints
+homepage: http://alexle.net
+plugin: http://rubyforge.org/projects/activefixture/
+license: MIT
+version: 0.1
+rails_version: 1.2+

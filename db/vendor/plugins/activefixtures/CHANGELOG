@@ -1,0 +1,8 @@
+== 09/29/2007
+ * Fix self-referential bug reported by Denis
+
+== 09/25/2007
+ * Fix polymorphic association bug reported by Denis
+
+== 09/18/2007
+ * First release of ActiveFixture

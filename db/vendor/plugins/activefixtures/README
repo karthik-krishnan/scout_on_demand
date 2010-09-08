@@ -1,0 +1,100 @@
+ActiveFixture by Alex Le (http://www.alexle.net)
+===============================================
+If you need to load samply data from external fixture files into a database with foreign-key constraints, the built-in db:fixtures:load rake task will fail miserably as it will perform the data-dump in random order.  There are a few solutions on the web, namely
+ 1. Renumber yml files.  This is not very elegant as what happens if you need to change the order of the yml files?  I will probably need to extend "numergrate" utility to help you do so.
+ 2. Define table orders within a new rake-task and perform the data-dump in this order.  This may work, however, keeping track of table orders can be annoying.  It's not really DRY.  The model already contains the constraints, we shouldn't need to repeat ourselves again.
+ 3. Disable foreign-key constraint while you run the db:fixtures:load.  Data integrity anyone?
+ 
+ActiveFixture is a small plugin to extend the current db:fixtures:load by adding a new db:fixtures:activeload rake task.  ActiveFixture reads the models of the current Rails application and determines the dependencies (foreign key constraints) between those models through reflection.  The fixtures for the relational models will then be loaded into the databaes accordingly.  All the developer has to do is to define the appropriate :belongs_to association within the models.  Basically there is virtually no change to your current application.
+
+Usage:
+======
+1.  Install the plugin
+  - Download it at http://rubyforge.org/projects/activefixture/
+  - Anonymous SVN: svn checkout http://activefixture.rubyforge.org/svn/trunk/
+  
+2.  Define all belongs_to relationships in your models (this should already be done)
+
+3.  Make sure for every table that your model is mapping too, there is a .yml (or .yaml) or .csv file with the same name.  For example, if your model is called Goose and you manually set_table_name 'Geese', then you should have a file /test/fixtures/geese.yml accordingly.  ActiveFixture will use the table name to determine which yml file to load, otherwise it will fail.
+
+
+Note & Disclaimer
+=================
+1.  db:fixtures:activeload will load the yml data into the current database and effectively wiping out the old data.  It's your responsibility to make sure it's okay to run the rake task.
+2.  Feedbacks and bug reports are welcome.
+    http://www.alexle.net
+    nworld3d[at]yahoo.com
+3.  Please review and vote for ActiveFixture to be included in the Rails Core.  Foreign key handling is a must in enterprise applications so I hope ActiveFixture will help Rails become more enterprise-ready.
+
+Explanation
+===========
+This is an example taken from my Rails-based online game, Wars of Earth (http://www.warsofearth.com).  I have a few tables (foreign-key enforced) and all the corresponding models/ yml files.  The models are defined as follow:
+
+class Character < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :game_race
+  belongs_to :game_character_level
+  
+  has_many   :messages
+  has_many   :sent_messages, :class_name => "Message", :foreign_key => :from_character_id
+end
+
+class User < ActiveRecord::Base
+  has_many :characters
+end
+
+class GameRace < ActiveRecord::Base
+  has_many :characters
+end
+
+class GameCharacterLevel < ActiveRecord::Base
+end
+
+class Message < ActiveRecord::Base
+  belongs_to :character
+  belongs_to :sender, :class_name => "Character", :foreign_key => :from_character_id
+end
+
+By analyzing the belongs_to associations, ActiveFixture will have to determine the correct data insertion order.
+
+Solution
+=========
+Since we know the relationships between tables defined within the models, the correct order of data insertion should be
+  1.  users.yml, game_races.yml, game_character_levels (can be in any order)
+  2.  characters.yml
+  3.  messages.yml
+
+This problem can be solved nicely using depth-first-search post-order graph traversal algorithm.  Think of a model as a node in a graph.  A foreign key constraint to another table (a.k.a. a belongs_to association) becomes a directed edge to another model node.  According to the above example settings, we will have a simple graph like this
+
+                    Message
+                      |
+                      |
+                      v
+     GameRace <--- Character ---> User
+                      |
+                      |
+                      v
+               GameCharacterLevel
+           
+With a DFS Postorder search, we will be able to obtain the correct dependent relationship thus the correct data loading order.  Why DFS Postorder?  Well, because the algorithm precisely traverses the graph in the correct order:  the leaf nodes should be the one who visited first, then work it way back to the starting root node.  Let's do a dry run of DFS Postorder on the graph, starting at Message node.  We start with Message node because in a away it is the starting point of the graph due to the fact that it has no incoming edge.
+  
+dfs( Message )
+{
+  processing Message --> queue all edges  Q[Character], Visited[]
+    dfs( Character )
+    { 
+      processing Character --> queue all edges Q[GameRace, User, GameCharacterLevel],  Visited []
+      {
+        dfs( GameRace )
+          process GameRace ---> no edges ---> mark as visited, Visited [GameRace]
+        dfs( User )
+          process User ---> no edges ---> mark as visited, Visited [GameRace, User]
+        dfs( GameCharacterLevel )
+          process GameCharacterLevel ---> no edges ---> mark as visited, Visited[GameRace, User, GameCharacterLevel]
+      }
+      Character has no more un-processed edges ---> mark as visited, Visited[GameRace, User, GameCharacterLevel, Character]
+    }
+  Message has no more un-processed edges --> mark Message as visited Visited[GameRace, User, GameCharacterLevel, Character, Message]
+}
+
+Voila!  Our Visited list now contains the correct insertion order.

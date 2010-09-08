@@ -1,0 +1,66 @@
+CompositePrimaryKeysHacks
+=========================
+
+This plugin is an extention (hack) for CompositePrimaryKeys.
+This supports, defining the composite primary key in the migration and also
+allow us to set string column(s)/ non incremental integer as primary key.
+
+This plugin has some changes in 
+
+a. associations.rb
+  1. Associations --> HasManyAssociation --> delete_records
+  2. ActiveRecord --> Associations --> ClassMethods --> has_one
+  3. ActiveRecord --> Associations --> ClassMethods --> belongs_to
+  4. ActiveRecord --> Associations --> ClassMethods --> construct_finder_sql_for_association_limiting
+  5. ActiveRecord --> Associations --> ClassMethods --> select_limited_ids_list
+  6. ActiveRecord --> Associations --> ClassMethods --> collection_accessor_methods
+  7. ActiveRecord --> Associations --> HasAndBelongsToManyAssociation --> insert_records and delete_records
+  8. ActiveRecord --> Associations --> BelongsToAssociation --> replace
+  9. ActiveRecord --> Associations --> AssociationProxy --> composite_join_clause and full_composite_join_clause
+
+b. base.rb
+  1. find_from_ids
+
+c. composite_arrays.rb
+
+d. jdbc_oracle_adapter.rb
+  1. If oracle setting supports_count_distinct? = false
+
+e. migration.rb
+  1. pk - provision to add the composite primary keys ( datatype: string or integer) (columns: single or multiple)
+
+f. resources.rb
+
+
+Example:
+
+1. For single (non incremental) primary key
+create_table :Users do |t|
+  t.string :ssn, :limit => 9, :null => false
+  t.string :user_name, :limit => 50, :null => false
+  t.string :user_location, :limit => 50, :null => false
+  t.pk :ssn
+end
+
+2. Composite primary key
+Lets assume, a user can have more than one profiles
+
+create_table :UserProfiles do |t|
+  t.string :ssn, :limit => 9, :null => false
+  t.string :profile_id, :limit => 25, :null => false
+  t.pk :ssn, :profile_id
+end
+
+Usage
+------
+
+class User
+  set_primary_keys :ssn
+end
+
+class UserProfile
+  set_primary_keys :ssn, :profile_id
+end
+
+
+Copyright (c) 2010 [Mahaswami Software], released under the MIT license
