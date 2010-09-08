@@ -16,6 +16,7 @@
   height: 450px;
   border: 1px solid #808080;
   margin-right: 10px;
+  padding-bottom: 50px;
 }
 
 #navcontainer ul
@@ -271,3 +272,90 @@ font-weight: bold;
   font-weight: bold;
 }
 
+#content .new-mail-actions {
+  font-size: 14px;
+  font-family: 'Helvetica';
+  position: relative;
+  left: 8px;
+  top: -30px;
+  height: 30px;
+}
+
+#content .new-mail-actions .send {
+  background: url('../images/small_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 62px;
+  display: block;
+  text-decoration: none;
+}
+
+#content .new-mail-actions .send:hover {
+  background: url('../images/small_button-hover.png')  no-repeat;
+}
+
+#content .new-mail-actions .send span {
+  margin-left: 12px;
+  vertical-align: sub;
+}
+
+#content .new-mail-actions .cancel {
+  background: url('../images/small_button.png')  no-repeat;
+  color: #AE5300;
+  height: 34px;
+  width: 62px;
+  display: block;
+  text-decoration: none;
+  position: relative;
+  left: 60px;
+  top: -34px;
+}
+
+#content .new-mail-actions .cancel:hover {
+  background: url('../images/small_button-hover.png')  no-repeat;
+}
+
+#content .new-mail-actions .cancel span {
+  margin-left: 8px;
+  vertical-align: sub;
+}
+
+#content .new-mail-head {
+  border: 1px solid #808080;
+  background-color: #f2f2f2;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: -20px;
+  height: 75px;
+  position: relative;
+}
+
+#content textarea {
+    width: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 793px;
+    height: 300px;
+}
+
+#content .new-mail-head label {
+    font-weight: bold;
+}
+
+#content .new-mail-head span.to {
+    position: absolute;
+    left: 70px;
+    top: 12px;
+}
+
+#content .new-mail-head span.subject {
+    position: absolute;
+    left: 39px;
+    top: 43px;
+}
+
+#content .new-mail-head input {
+    height: 20px;
+    width: 500px;
+}
