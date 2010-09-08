@@ -359,3 +359,35 @@ font-weight: bold;
     height: 20px;
     width: 500px;
 }
+
+#content .new-mail-head .error_to {
+    position: absolute;
+    left: 605px;
+    top: 12px;
+    height: 26px;
+    width: 183px;
+}
+
+#content .new-mail-head .error_to span {
+    position: absolute;
+    left: 27px;
+    top: 5px;
+    width: 183px;
+    color: #990000;
+}
+
+#content .new-mail-head .error_subject {
+    position: absolute;
+    left: 605px;
+    top: 42px;
+    height: 26px;
+    width: 183px;
+}
+
+#content .new-mail-head .error_subject span {
+    position: absolute;
+    left: 27px;
+    top: 5px;
+    width: 183px;
+    color: #990000;
+}

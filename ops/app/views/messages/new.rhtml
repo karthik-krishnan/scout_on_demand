@@ -3,10 +3,9 @@
     <a class=send href="javascript:document.getElementById('new_message').submit();"><span>Send</span></a>
     <a class=cancel href="#"><span>Cancel</span></a>
   </div>
-  <%= f.error_messages %>
   <div class="new-mail-head">
-    <span class="to"><label>To: </label><%= f.text_field :mail_to %></span>
-    <span class="subject"><label>Subject: </label><%= f.text_field :subject %></span>
+    <span class="to"><label>To: </label><%= f.text_field :mail_to %></span><%= mail_to_error_display %>
+    <span class="subject"><label>Subject: </label><%= f.text_field :subject %></span><%= subject_error_display %>
   </div>
   <%= f.text_area :contents, :rows => 30, :cols => 200 %>
 <% end %>

@@ -1,6 +1,8 @@
 class Message < ActiveRecord::Base
 
-  validates_presence_of :subject, :contents, :mail_to
+  validates_presence_of :mail_to, :message => 'Please enter a recipient'
+  validates_presence_of :subject, :message => 'Please enter a subject'
+  
   has_many :recipients, :class_name => 'Recipient', :dependent => :destroy
 
   attr_accessor :mail_to
@@ -35,7 +37,7 @@ class Message < ActiveRecord::Base
   def validate_receiver_email_ids
     receivers.each {|r|
       u = User.find_by_email_id(r)
-      errors.add(:mail_to, "Invalid email id...#{r}") if u.blank?
+      errors.add(:mail_to, "#{r} is invalid") if u.blank?
     }
   end
 

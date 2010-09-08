@@ -10,9 +10,8 @@ describe Message do
     @m.should validate_presence_of(:subject)
   end
 
-
   it do
-    @m.should validate_presence_of(:contents)
+    @m.should validate_presence_of(:mail_to)
   end
 
   it do
