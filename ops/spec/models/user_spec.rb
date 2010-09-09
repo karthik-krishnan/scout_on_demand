@@ -26,6 +26,7 @@ end
 context User, "Incoming Messages" do
   before(:each) do
     @user = User.find_by_user_id("neil")
+    User.current = @user
   end
   
   it "should show only unread and read messages in the inbox" do

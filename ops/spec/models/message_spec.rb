@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Message do
   before(:each) do
+    User.current = User.find_by_user_id('neil')
     @m = Message.new
     @m.mail_to = "john@scout.com"
   end
@@ -23,6 +24,7 @@ end
 context Message, "after initialize" do
 
   before(:each) do
+    User.current = User.find_by_user_id('neil')
     @m = Message.new
   end
 
@@ -33,24 +35,25 @@ context Message, "after initialize" do
   it "should default created_date_time as now" do
     @m.created_date_time.should_not be_nil
   end
-  
+
 end
 
 context Message, "when ask for" do
 
   before(:each) do
+    User.current = User.find_by_user_id('neil')
     @sender_email_id = 'peter@scout.com'
     @m = Message.find_by_email_id(@sender_email_id)
   end
 
   it "should return formatted date without year" do
-    a = Time.now
+    a = @m.created_date_time
     date = a.strftime '%b %d'
     @m.formatted_date.should eql(date)
   end
 
   it "should return formatted date with year" do
-    a = Time.now
+    a = @m.created_date_time
     date = a.strftime '%B %d, %Y'
     @m.formatted_date('display_year').should eql(date)
   end
@@ -59,7 +62,7 @@ context Message, "when ask for" do
     u = User.find_by_email_id(@sender_email_id)
     @m.sender.user_id.should eql(u.user_id)
   end
-  
+
 end
 
 context Message, "on Validate" do
@@ -85,12 +88,13 @@ context Message, "on Validate" do
     m.valid?
     m.errors.on(:mail_to).should eql('You cannot send to your own email id')
   end
-  
+
 end
 
 context Message, "on create" do
 
   before(:each) do
+    User.current = User.find_by_user_id('neil')
     @m = Message.new(:mail_to => 'john@scout.com,peter@scout.com', :subject => 'test', :contents => 'test')
   end
 
