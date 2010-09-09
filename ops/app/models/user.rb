@@ -9,8 +9,4 @@ class User < ActiveRecord::Base
         User.current.email_id, [Recipient::UNREAD_STATUS, Recipient::READ_STATUS]], :include => :message, :order => "Messages.created_date_time DESC")
   end
 
-#  def self.current
-#    @@current || User.find_by_user_id('neil')
-#  end
-
 end
