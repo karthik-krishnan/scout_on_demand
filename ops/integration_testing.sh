@@ -5,4 +5,4 @@ export MY_RUBY_HOME=~/.ruby_versions/ruby-1.8.6-p383
 export PATH=$GEM_HOME/bin:$MY_RUBY_HOME/bin:$ORIGINAL_PATH
 script/server&
 cd /home/msuser1/workspace/cucumber_testing/
-cucumber  --tags @scout
+cucumber  --tags @scout --format html --out cucumber_report.html
