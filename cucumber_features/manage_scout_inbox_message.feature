@@ -1,13 +1,13 @@
-@scout
-Feature : Manage Inbox Messages
-    In order to organize the messages
+
+Feature : Manage Inbox 
+    In order to access and manage communications from other users
     system user
-    wants to customize, delete and filter the messages
+    wants to view newly received messages, unread messages and remove them.
 
 Scenario: List inbox messages
     Given I logged into system as "neilmehta"
     When I go to incoming_messages
-    Then I should see inbox messages
+    Then I should see a list of messages
 
 Scenario: View the message details
     Given I logged into system as "Coach"
