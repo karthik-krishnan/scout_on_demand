@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
   private
   
   def set_current_user
-    User.current = User.find_by_user_id(params[:user]) if params[:user] && User.find_by_user_id(params[:user])
+    user = User.find_by_user_id(params[:user]) if params[:user] && User.find_by_user_id(params[:user])
+    session[:user] = user || session[:user] || User.find_by_user_id('neil')
+    User.current = session[:user]
   end
 end
