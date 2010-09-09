@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
         User.current.email_id, [Recipient::UNREAD_STATUS, Recipient::READ_STATUS]], :include => :message, :order => "Messages.created_date_time DESC")
   end
 
+  def unread_messages
+    Recipient.find(:all, :conditions => ["email_id = ? AND message_status = ?", User.current.email_id, Recipient::UNREAD_STATUS])
+  end
+  
 end

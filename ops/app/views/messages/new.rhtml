@@ -1,7 +1,7 @@
 <% form_for @message do |f| %>
   <div class=new-mail-actions>
     <a class=send href="javascript:document.getElementById('new_message').submit();"><span>Send</span></a>
-    <a class=cancel href="#"><span>Cancel</span></a>
+    <a class=cancel href="/incoming_messages"><span>Cancel</span></a>
   </div>
   <div class="new-mail-head">
     <span class="to"><label>To: </label><%= f.text_field :mail_to %></span><%= mail_to_error_display %>
