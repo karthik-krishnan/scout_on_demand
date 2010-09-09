@@ -1,2 +1,5 @@
 #!/usr/bin/env sh
-java -jar lib/jruby-complete.jar -S rake
+
+#Task  = $1
+#Trace = $2
+java -jar lib/jruby-complete.jar -S rake $1 $2
