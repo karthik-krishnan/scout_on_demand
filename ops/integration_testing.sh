@@ -6,4 +6,4 @@ export PATH=$GEM_HOME/bin:$MY_RUBY_HOME/bin:$ORIGINAL_PATH
 script/server&
 cd /home/msuser1/workspace/cucumber_testing/
 cucumber  --tags @scout --format html --out cucumber_report.html
-cp cucumber_report.html "/home/msuser1/hudson/jobs/Cucumber Functional Test/workspace/ops/doc/result.html"
+cp cucumber_report.html "/home/msuser1/hudson/jobs/Cucumber Functional Test/workspace/ops/doc/results.html"
