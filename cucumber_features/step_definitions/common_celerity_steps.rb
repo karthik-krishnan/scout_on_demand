@@ -20,7 +20,7 @@ Before do
       #fixtures_folder = File.join(RAILS_ROOT, 'spec', 'fixtures')
       #fixtures_folder = "/home/msuser1/workspace/forum/integration_testing/scenarios/acceptance_testing"
       #fixtures_folder = "/home/msuser1/workspace/ebanking/integration_testing/scenarios/acceptance_testing"
-      fixtures_folder = "/home/msuser1/workspace/scout_inbox/scenarios/test"
+      fixtures_folder = "/home/msuser1/workspace/scout_on_demand/db/scenarios/test"
       fixtures = Dir[File.join(fixtures_folder, '*.yml')].map {|f| File.basename(f, '.yml') }
       Fixtures.create_fixtures(fixtures_folder, fixtures)
     }
