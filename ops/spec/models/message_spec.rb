@@ -71,7 +71,7 @@ context Message, "on Validate" do
 
   it "should fail if receiver's email id is not available in the system" do
     @m.valid?
-    @m.errors.on(:mail_to).should eql('Invalid email id...test@scout.com')
+    @m.errors.on(:mail_to).should eql('test@scout.com is invalid')
   end
 
   it "should not fail if receiver's email id is available in the system" do
